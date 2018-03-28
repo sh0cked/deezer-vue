@@ -9,16 +9,9 @@ module.exports = {
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
         BASE_PATH: JSON.stringify(process.env.GH_PAGES ? '/deezer-vue' : '/'),
+        GH_PAGES: JSON.stringify(process.env.GH_PAGES)
       }),
     ],
 
-  },
-  // chainWebpack: config => {
-  //   config
-  //     .plugin('html')
-  //     .tap(args => {
-  //       console.log('WHAT HERE -> ', args)
-  //       return [/* new args to pass to html-webpack-plugin's constructor */]
-  //     })
-  // }
+  }
 };
