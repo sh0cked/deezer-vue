@@ -22,15 +22,15 @@ import Component from 'vue-class-component';
 import { State, Getter } from 'vuex-class';
 
 const coversMap = {
-  Pop: './images/pop.jpg',
-  Rock: './images/rock.jpg',
-  Dance: './images/dance.jpg',
-  'R&B': './images/rnb.jpg',
-  'Rap/Hip Hop': './images/rap.jpg',
-  Alternative: './images/alternative.jpg',
-  Electro: './images/electro.jpg',
-  Folk: './images/folk.jpg',
-  Reggae: './images/reggae.jpg',
+  132: './images/pop.jpg',
+  152: './images/rock.jpg',
+  113: './images/dance.jpg',
+  165: './images/rnb.jpg',
+  116: './images/rap.jpg',
+  85: './images/alternative.jpg',
+  106: './images/electro.jpg',
+  466: './images/folk.jpg',
+  144: './images/reggae.jpg',
 };
 
 @Component()
@@ -42,7 +42,7 @@ export default class HomePage extends Vue {
   get genres() {
     return this.genreList.slice(0, 9).map(item => ({
       ...item,
-      imageCover: coversMap[item.name] || item.picture_big,
+      imageCover: coversMap[item.id] || item.picture_big,
       artists: this.genresArtist[item.id]
         ? this.genresArtist[item.id].slice(0, 6)
         : [],
