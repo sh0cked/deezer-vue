@@ -31,7 +31,7 @@
 
     section.chartList.chartlist__cardsWrapper(v-if="!state.contentLoaded")
       .chartlist__wrapper
-        animated-placeholder(v-for="(item, index) in fakeAlbums" v-bind:key="index" width="192" height="296" v-bind:style="{'margin': '10px 10px 14px'}")
+        animated-placeholder(v-for="(item, index) in fakeAlbums" v-bind:key="index" width="160" height="256" v-bind:style="{'margin': '10px 8px 14px'}")
     section.chartList.chartlist__cardsWrapper(v-if="state.contentLoaded")
       .chartlist__wrapper
         play-card(
@@ -91,7 +91,7 @@ export default class HomePage extends Vue {
   @Getter('homePlaylists') playlists;
   @Getter('homeTopPlaylists') topPlaylists;
 
-  fakeAlbums = Array.from({ length: 10 });
+  fakeAlbums = Array.from({ length: 12 });
 
   currentAlbumPage = 1;
   currentChartPage = 1;

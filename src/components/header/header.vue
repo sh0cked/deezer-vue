@@ -6,7 +6,7 @@
           .logo
         .header__buttons
           router-link(to="/play")
-            md-button Explore
+            md-button Play
           router-link(to="/genres")
             md-button Genres
       header-search
@@ -31,7 +31,8 @@ import Component from 'vue-class-component';
 import { State } from 'vuex-class';
 import HeaderSearch from './search/search.vue';
 import HeaderSearchResult from './search/search.panel.vue';
-import { APP_ID, OAUTH_REDIRECT_URL } from '../../config';
+import { Watch } from 'vue-property-decorator';
+
 
 @Component({
   components: {
@@ -49,6 +50,11 @@ export default class Header extends Vue {
 
   @State(state => state.user)
   userState;
+
+  @Watch('$route')
+  routeChanged() {
+    console.log('THIS HERE -> ', this.$route.name)
+  }
 
   openSearch() {
     this.$store.dispatch('startSearch');
@@ -162,5 +168,8 @@ export default class Header extends Vue {
   }
   .md-list-item-content{
     color: white
+  }
+  .header__buttons .router-link-active .md-button{
+    background-color: rgba(255,255,255,0.1)
   }
 </style>

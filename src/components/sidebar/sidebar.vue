@@ -62,10 +62,9 @@ import SidebarPlaylistPlaceholder from './sidebar.playlist.placeholder.vue';
 export default class Sidebar extends Vue {
   MAX_PLAYLSITS_COUNT_ON_PAGE = 8;
   MAX_ARTISTS_COUNT_ON_PAGE = 12;
-  MAX_GENRES_COUNT_ON_PAGE = 9;
+  MAX_GENRES_COUNT_ON_PAGE = 12;
   currentPlaylistsPage = 1;
   currentArtistsPage = 1;
-  currentTime = 0;
 
   @State(state => state.sidebar)
   state;
@@ -223,7 +222,7 @@ export default class Sidebar extends Vue {
     width: 100%;
     transform: translateZ(0);
     position: sticky;
-    top: calc(-1300px + 100vh);
+    top: calc(-1150px + 100vh);
 
     .md-button[disabled]{
       opacity: 0.3 !important
@@ -243,17 +242,17 @@ export default class Sidebar extends Vue {
     flex-direction: row;
     margin-bottom: 8px;
     margin-right: 10px;
-    min-height: 45px;
+    min-height: 34px;
     cursor: pointer;
-    max-width: 154px;
-    width: 154px;
+    max-width: 110px;
+    width: 120px;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     position: relative;
-    background-color: #1c212c;
-    border-radius: 0;
+    background-color: rgba(28, 33, 44, 0.36);
     transition: all 350ms ease-in-out;
+    border-radius 0
 
     &:hover {
       opacity: 0.6;
@@ -261,7 +260,7 @@ export default class Sidebar extends Vue {
   }
 
   .asideGenres__title {
-    font-size: 13px;
+    font-size: 12px;
     font-family: 'Encode Sans', sans-serif;
     color: white;
     position: relative;

@@ -1,26 +1,26 @@
-import * as deezer from '../services/deezer.player';
-import * as player from '../services/audio.service';
+import * as deezer from "../services/deezer.player";
+import * as player from "../services/audio.service";
 
-import store from './index';
-import { RESET_TRACKS_STATE } from './play';
-import { fetchArtistById, fetchTrackById } from '../services/api';
-import { eventBus } from '../utils/utils';
+import store from "./index";
+import { RESET_TRACKS_STATE } from "./play";
+import { fetchArtistById, fetchTrackById } from "../services/api";
+import { eventBus } from "../utils/utils";
 
-export const PLAY = 'PLAY';
-export const PAUSE = 'PAUSE';
-export const START_PLAY = 'START_PLAY';
-export const AUDIO_STOP = 'AUDIO_STOP';
-export const UPDATE = 'UPDATE';
-export const SET_VOLUME = 'SET_VOLUME';
-export const TOGGLE_VOLUME = 'TOGGLE_VOLUME';
-export const SET_ACTIVE_TRACK = 'SET_ACTIVE_TRACK';
-export const SET_PROCESSING = 'SET_PROCESSING';
-export const TOGGLE_REPEAT_MODE = 'TOGGLE_REPEAT_MODE';
-export const TOGGLE_SHUFFLE_MODE = 'TOGGLE_SHUFFLE_MODE';
-export const SET_AUDIO_LOADING = 'SET_AUDIO_LOADING';
-export const EXTEND_ACTIVE_TRACK_DATA = 'EXTEND_ACTIVE_TRACK_DATA';
-export const SET_PLAYER_TYPE = 'SET_PLAYER_TYPE';
-export const SET_AUDIO_READY_STATE = 'SET_AUDIO_READY_STATE';
+export const PLAY = "PLAY";
+export const PAUSE = "PAUSE";
+export const START_PLAY = "START_PLAY";
+export const AUDIO_STOP = "AUDIO_STOP";
+export const UPDATE = "UPDATE";
+export const SET_VOLUME = "SET_VOLUME";
+export const TOGGLE_VOLUME = "TOGGLE_VOLUME";
+export const SET_ACTIVE_TRACK = "SET_ACTIVE_TRACK";
+export const SET_PROCESSING = "SET_PROCESSING";
+export const TOGGLE_REPEAT_MODE = "TOGGLE_REPEAT_MODE";
+export const TOGGLE_SHUFFLE_MODE = "TOGGLE_SHUFFLE_MODE";
+export const SET_AUDIO_LOADING = "SET_AUDIO_LOADING";
+export const EXTEND_ACTIVE_TRACK_DATA = "EXTEND_ACTIVE_TRACK_DATA";
+export const SET_PLAYER_TYPE = "SET_PLAYER_TYPE";
+export const SET_AUDIO_READY_STATE = "SET_AUDIO_READY_STATE";
 
 const state = {
   activeTrack: null,
@@ -35,14 +35,14 @@ const state = {
   repeatMode: false,
   shuffleMode: false,
   isReady: false,
-  playerType: 'native', // 'native' or 'deezer'
+  playerType: "native" // 'native' or 'deezer'
 };
 
-const playService = player;
+let playService = player;
 
 const getters = {
   isPlaying: state => state.isPLaying,
-  volume: state => Math.round(state.volume * 100),
+  volume: state => Math.round(state.volume * 100)
 };
 
 const actions = {
@@ -67,15 +67,15 @@ const actions = {
   },
   audioEnd({ commit }) {
     commit(AUDIO_STOP);
-    store.dispatch('playNext');
+    store.dispatch("playNext");
   },
   audioError({ commit, state }) {
-    store.dispatch('setTrackError', state.activeTrack);
+    store.dispatch("setTrackError", state.activeTrack);
     eventBus.$emit(
-      'showSnackbar',
+      "showSnackbar",
       `Error on loading ${state.activeTrack.title} track`
     );
-    store.dispatch('playNext');
+    store.dispatch("playNext");
   },
   setVolume({ commit }, volume) {
     playService.setVolume(volume);
@@ -96,7 +96,10 @@ const actions = {
   toggleShuffleMode({ commit }, payload) {
     commit(TOGGLE_SHUFFLE_MODE, Boolean(payload));
   },
-  setActiveTrack({ commit }, payload) {
+  setActiveTrack({ commit, state }, payload) {
+    if (payload.skipIfExists && state.activeTrack) {
+      return;
+    }
     commit(SET_ACTIVE_TRACK, payload);
   },
   setAudioLoading({ commit }, payload) {
@@ -107,12 +110,12 @@ const actions = {
     if (playService.destroy) {
       playService.destroy();
     }
-    playService = playerType === 'deezer' ? player : deezer;
+    playService = playerType === "deezer" ? player : deezer;
     commit(SET_AUDIO_READY_STATE, true);
   },
   setAudioReadyState(value) {
     commit(SET_AUDIO_READY_STATE, value);
-  },
+  }
 };
 
 const mutations = {
@@ -168,12 +171,12 @@ const mutations = {
   },
   [SET_AUDIO_READY_STATE](state, payload) {
     state.isAudioReady = payload;
-  },
+  }
 };
 
 export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 };
