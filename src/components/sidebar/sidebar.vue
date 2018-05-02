@@ -1,6 +1,6 @@
 <template lang="jade">
   aside.sidebar
-    .sidebar__Inner
+    .sidebar__Inner(v-bind:class="{ sticky: shouldBeSticky}")
       .sidebar__Header
         .left
           md-icon library_music
@@ -65,6 +65,7 @@ export default class Sidebar extends Vue {
   MAX_GENRES_COUNT_ON_PAGE = 12;
   currentPlaylistsPage = 1;
   currentArtistsPage = 1;
+  shouldBeSticky = false;
 
   @State(state => state.sidebar)
   state;
@@ -168,6 +169,18 @@ export default class Sidebar extends Vue {
     if (!this.genres || !this.genres.length) {
       this.$store.dispatch('fetchAllGenreData');
     }
+    this.resizeListener();
+    window.addEventListener('resize', this.resizeListener)
+  }
+
+  destroyed(){
+    console.log('Sidebar destryoyed!!!')
+    window.removeEventListener('resize', this.resizeListener)
+  }
+
+  resizeListener(){
+    console.log('RESIZE LISTENER RUNNING')
+    this.shouldBeSticky = window.innerHeight < 1100;
   }
 }
 </script>
@@ -221,11 +234,18 @@ export default class Sidebar extends Vue {
     flex-direction: column;
     width: 100%;
     transform: translateZ(0);
-    position: sticky;
-    top: calc(-1150px + 100vh);
+    position: fixed;
+    max-width: 516px;
 
     .md-button[disabled]{
       opacity: 0.3 !important
+    }
+
+    &.sticky{
+      position: sticky;
+      top: calc(-1350px + 100vh);
+      width: 100%;
+      max-width auto
     }
   }
 

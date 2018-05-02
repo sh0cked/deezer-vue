@@ -31,14 +31,12 @@ import Component from 'vue-class-component';
 import { State } from 'vuex-class';
 import HeaderSearch from './search/search.vue';
 import HeaderSearchResult from './search/search.panel.vue';
-import { Watch } from 'vue-property-decorator';
-
 
 @Component({
   components: {
     'header-search': HeaderSearch,
-    'header-search-result': HeaderSearchResult,
-  },
+    'header-search-result': HeaderSearchResult
+  }
 })
 export default class Header extends Vue {
   @State(state => state.search.isOpened)
@@ -50,11 +48,6 @@ export default class Header extends Vue {
 
   @State(state => state.user)
   userState;
-
-  @Watch('$route')
-  routeChanged() {
-    console.log('THIS HERE -> ', this.$route.name)
-  }
 
   openSearch() {
     this.$store.dispatch('startSearch');

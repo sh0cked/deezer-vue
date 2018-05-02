@@ -73,6 +73,10 @@
       "autoprefixer": {}
     }
   },
+  "prettier": {
+    "printWidth": 80,
+    "singleQuote": true
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",

@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import Vue from "vue";
-import Component from "vue-class-component";
-import { State } from "vuex-class";
-import { Watch } from "vue-property-decorator";
+import Vue from 'vue';
+import Component from 'vue-class-component';
+import { State } from 'vuex-class';
+import { Watch } from 'vue-property-decorator';
 
 @Component()
 export default class PlayPage extends Vue {
@@ -31,7 +31,7 @@ export default class PlayPage extends Vue {
   audioState;
   isReady = false;
 
-  @Watch("$route")
+  @Watch('$route')
   routeChanged() {
     this.handleRouteParams();
   }
@@ -40,16 +40,16 @@ export default class PlayPage extends Vue {
     const { type, id, trackId } = this.$route.params;
     if (!type || !id) {
       if (!this.state.tracks.length) {
-        await this.$store.dispatch("fetchPlayData");
+        await this.$store.dispatch('fetchPlayData');
       }
       this.isReady = true;
       return;
     }
     const actionMap = {
-      album: "fetchAlbum",
-      playlist: "fetchPlaylist",
-      genre: "fetchGenreTracks",
-      artist: "fetchArtistTracks"
+      album: 'fetchAlbum',
+      playlist: 'fetchPlaylist',
+      genre: 'fetchGenreTracks',
+      artist: 'fetchArtistTracks'
     };
     await this.$store.dispatch(actionMap[type], id);
     let activeTrack;
@@ -63,7 +63,7 @@ export default class PlayPage extends Vue {
     } else {
       activeTrack = this.state.tracks[0];
     }
-    this.$store.dispatch("setActiveTrack", {
+    this.$store.dispatch('setActiveTrack', {
       ...activeTrack,
       skipIfExists: true
     });
